@@ -1,0 +1,251 @@
+#main {
+    display: flex;
+}
+
+#griddiv {
+    float: left;
+    margin-left: 5%;
+    padding-right: 30px;
+}
+
+#chessboard {
+    border-collapse: collapse;
+}
+
+#X0, #X2, #X4, #X6,
+#X9, #X11, #X13, #X15,
+#X16, #X18, #X20, #X22, 
+#X25, #X27, #X29, #X31,
+#X32, #X34, #X36, #X38,
+#X41, #X43, #X45, #X47,
+#X48, #X50, #X52, #X54,
+#X57, #X59, #X61, #X63{
+    background-color: #eeeed2;
+}
+
+#X1, #X3, #X5, #X7,
+#X8, #X10, #X12, #X14,
+#X17, #X19, #X21, #X23,
+#X24, #X26, #X28, #X30,
+#X33, #X35, #X37, #X39,
+#X40, #X42, #X44, #X46,
+#X49, #X51, #X53, #X55,
+#X56, #X58, #X60, #X62 {
+    background-color: #769656;
+}
+
+#griddiv td {
+    width: 75px;
+    height: 75px;
+}
+
+#griddiv #coordinate {
+    border:white;
+    text-align: center;
+    font-size: 30px;
+    font-family: "Protest Revolution", sans-serif;
+}
+
+.B_R {
+    background-image: url(imagefile/Chess_rdt60.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.B_N {
+    background-image: url(imagefile/Chess_ndt60.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.B_B {
+    background-image: url(imagefile/Chess_bdt60.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.B_Q {
+    background-image: url(imagefile/Chess_qdt60.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.B_K {
+    background-image: url(imagefile/Chess_kdt60.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.B_P {
+    background-image: url(imagefile/Chess_pdt60.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.W_R {
+    background-image: url(imagefile/Chess_rlt60.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.W_N {
+    background-image: url(imagefile/Chess_nlt60.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.W_B {
+    background-image: url(imagefile/Chess_blt60.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.W_Q {
+    background-image: url(imagefile/Chess_qlt60.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.W_K {
+    background-image: url(imagefile/Chess_klt60.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.W_P {
+    background-image: url(imagefile/Chess_plt60.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.pos_playable {
+    background-image: url(imagefile/grey_dot.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50px;
+}
+
+#statusdiv {
+    background-image: url(imagefile/bgimage.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    width: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    max-height: 613px;
+    outline: auto;
+}
+
+#statusdiv td {
+    width: 40px;
+    height: 40px;
+}
+
+#gamestatus {
+    max-width: auto;
+    font-weight: bold;
+    font-size: 24px;
+    font-family: "Protest Revolution", sans-serif;
+    white-space: pre-line;
+    margin-top: 50%;
+    text-align: center;
+}
+
+#whitepawn {
+    background-image: url(imagefile/Chess_plt60.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.W_Ndisplay {
+    background-image: url(imagefile/Chess_nlt60.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.W_Bdisplay {
+    background-image: url(imagefile/Chess_blt60.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.W_Rdisplay {
+    background-image: url(imagefile/Chess_rlt60.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.W_Qdisplay {
+    background-image: url(imagefile/Chess_qlt60.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+#blackpiece {
+    position: absolute;
+    bottom: 10px;
+}
+
+#blackpawn {
+    background-image: url(imagefile/Chess_pdt60.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.B_Ndisplay {
+    background-image: url(imagefile/Chess_ndt60.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.B_Bdisplay {
+    background-image: url(imagefile/Chess_bdt60.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.B_Rdisplay {
+    background-image: url(imagefile/Chess_rdt60.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.B_Qdisplay {
+    background-image: url(imagefile/Chess_qdt60.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.count {
+    font-family: "Protest Revolution", sans-serif;
+    text-align: center;
+}
+
+#promotechoice td{
+    width: 61.6px;
+    height: 61.6px;
+}
+
+#reset {
+    background-image: url(imagefile/buttonbg.jpg);
+    width: 263px;
+    height: 100px;
+    font-size: 25px;
+    font-family: "Protest Revolution", sans-serif;
+    color: white;
+    position: absolute;
+    bottom: 110px;
+}

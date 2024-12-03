@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chess</title>
+    <link rel="stylesheet" href="chess_style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Protest+Revolution&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="main">
+      <div id="griddiv">
+        <table id="chessboard">
+          <tr>
+            <td id="coordinate">8</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td id="coordinate">7</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td id="coordinate">6</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td id="coordinate">5</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td id="coordinate">4</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td id="coordinate">3</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td id="coordinate">2</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td id="coordinate">1</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td id="coordinate"></td>
+            <td id="coordinate">a</td>
+            <td id="coordinate">b</td>
+            <td id="coordinate">c</td>
+            <td id="coordinate">d</td>
+            <td id="coordinate">e</td>
+            <td id="coordinate">f</td>
+            <td id="coordinate">g</td>
+            <td id="coordinate">h</td>
+          </tr>
+        </table>
+      </div>
+
+      <div id="statusdiv">
+        <table id="whitepiece">
+          <tr>
+            <td id="whitepawn"></td>
+            <td id="whiteknight" class="W_Ndisplay"></td></td>
+            <td id="whitebishop" class="W_Bdisplay"></td>
+            <td id="whiterook" class="W_Rdisplay"></td>
+            <td id="whitequeen" class="W_Qdisplay"></td>
+            <td id="whiteadvantage" class="count"></td>
+          </tr>
+          <tr>
+            <td id="W_Pcount" class="count">0</td>
+            <td id="W_Ncount" class="count">0</td>
+            <td id="W_Bcount" class="count">0</td>
+            <td id="W_Rcount" class="count">0</td>
+            <td id="W_Qcount" class="count">0</td>
+          </tr>
+        </table>
+
+        <table id="promotechoice">
+            <td id="Npromote"></td>
+            <td id="Bpromote"></td>
+            <td id="Rpromote"></td>
+            <td id="Qpromote"></td>
+        </table>
+
+        <p id="gamestatus"></p>
+
+        <table id="blackpiece">
+          <tr>
+            <td id="B_Pcount" class="count">0</td>
+            <td id="B_Ncount" class="count">0</td>
+            <td id="B_Bcount" class="count">0</td>
+            <td id="B_Rcount" class="count">0</td>
+            <td id="B_Qcount" class="count">0</td>
+          </tr>
+          <tr>
+            <td id="blackpawn"></td>
+            <td id="blackknight" class="B_Ndisplay"></td>
+            <td id="blackbishop" class="B_Bdisplay"></td>
+            <td id="blackrook" class="B_Rdisplay"></td>
+            <td id="blackqueen" class="B_Qdisplay"></td>
+            <td id="blackadvantage" class="count"></td>
+          </tr>
+        </table>
+
+        <button id="reset">Reset Board</button>
+
+      </div>
+    </div>
+
+    <script src="chess_script.js"></script>
+  </body>
+</html>
