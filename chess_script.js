@@ -15,7 +15,6 @@ let pos = 0;
 for (let node of document.querySelectorAll(`td`)) {
     if (!Boolean(node.id)) {
         node.id = `X` + String(pos);
-        node.onmouseenter = node.style.cursor = "pointer";
 
         if (pos == 0 || pos == 7) {
             node.className = `B_R`; //Black Rook
@@ -79,6 +78,8 @@ for (let node of document.querySelectorAll(`td`)) {
         }
     }
 }
+
+updatecursor()
 
 //RESET BOARD
 const resetbutton = document.getElementById(`reset`);
@@ -160,6 +161,18 @@ resetbutton.onclick = function() {
 
         else {
             node.className = `empty`;
+        }
+    }
+}
+
+//UPDATE CURSOR
+function updatecursor() {
+    for (let pos = 0; pos < 64; pos++) {
+        if (document.getElementById(`X` + String(pos)).className != `empty` || document.getElementById(`X` + String(pos)).classList.contains(`pos_playable`)) {
+            document.getElementById(`X` + String(pos)).style.cursor = "pointer";
+        }
+        else {
+            document.getElementById(`X` + String(pos)).style.cursor = "initial";
         }
     }
 }
@@ -987,11 +1000,11 @@ function WK_moves_list(position) { //White King
 
     }
     if (position == 60) {
-        if (W_can_OO && document.getElementById(`X61`).className == `empty` && document.getElementById(`X62`).className == `empty`) {
+        if (W_can_OO && document.getElementById(`X61`).className == `empty` && document.getElementById(`X62`).className == `empty` && !is_Wcheck(`W_K`, 60, 61)) {
             result_list.push(62)
         }
     
-        if (W_can_OOO && document.getElementById(`X59`).className == `empty` && document.getElementById(`X58`).className == `empty` && document.getElementById(`X57`).className == `empty`) {
+        if (W_can_OOO && document.getElementById(`X59`).className == `empty` && document.getElementById(`X58`).className == `empty` && document.getElementById(`X57`).className == `empty` && !is_Wcheck(`W_K`, 60, 59)) {
             result_list.push(58)
         }
     }
@@ -1024,11 +1037,11 @@ function pseudoWK_moves_list(position, pseudo_list) { //White King
 
     }
     if (position == 60) {
-        if (W_can_OO && pseudo_list[61] == `empty` && pseudo_list[62] == `empty`) {
+        if (W_can_OO && pseudo_list[61] == `empty` && pseudo_list[62] == `empty` && !is_Wcheck(`W_K`, 60, 61)) {
             result_list.push(62)
         }
     
-        if (W_can_OOO && pseudo_list[59] == `empty` && pseudo_list[58] == `empty` && pseudo_list[57] == `empty`) {
+        if (W_can_OOO && pseudo_list[59] == `empty` && pseudo_list[58] == `empty` && pseudo_list[57] == `empty` && !is_Wcheck(`W_K`, 60, 59)) {
             result_list.push(58)
         }
     }
@@ -1040,7 +1053,7 @@ function pseudoWK_moves_list(position, pseudo_list) { //White King
 function white_move(node) {
     if (is_Wturn) {
         let playable_list = []; //list of id representing integer index
-        let promotion = false;;
+        let promotion = false;
 
         if (node.className == `W_P`) {
             playable_list = WP_moves_list(Number(node.id.slice(1)));
@@ -1071,6 +1084,8 @@ function white_move(node) {
                 document.getElementById(`X` + String(pos)).classList.add(`pos_playable`);
             }
         }
+
+        updatecursor()
 
         for (let temp of document.querySelectorAll(`td`)) {
             temp.onclick = function() {
@@ -1127,7 +1142,7 @@ function white_move(node) {
                             document.getElementById(`X63`).className = `empty`;
                             document.getElementById(`X61`).className = `W_R`;
                         }
-                        else if (temp.id == `X58` && W_can_OOO) {
+                        else if (temp.id == `X58` && W_can_OOO && !is_Wcheck(`W_K`, 60, 59)) {
                             document.getElementById(`X56`).className = `empty`;
                             document.getElementById(`X59`).className = `W_R`;
                         }
@@ -1206,11 +1221,17 @@ function white_move(node) {
 
                     node.className = `empty`;
                     if (is_Bcheckmate()) {
-                        document.getElementById(`gamestatus`).textContent = `White won by Checkmate!`;
+                        if (is_Bcheck()) {
+                            document.getElementById(`gamestatus`).textContent = `White won by Checkmate!`;
+                        }
+                        else {
+                            document.getElementById(`gamestatus`).textContent = `Game is drawn due to\nStalemate!`;
+                        }
                     }
                     else if(!promotion) {
                         document.getElementById(`gamestatus`).textContent = `Black's turn`;
                     }
+                    updatecursor()
                 }   
             }
         }
@@ -1983,11 +2004,11 @@ function BK_moves_list(position) { //Black King
 
     }
     if (position == 4) {
-        if (B_can_OO && document.getElementById(`X5`).className == `empty` && document.getElementById(`X6`).className == `empty`) {
+        if (B_can_OO && document.getElementById(`X5`).className == `empty` && document.getElementById(`X6`).className == `empty` && !is_Bcheck(`B_K`, 4, 5)) {
             result_list.push(6)
         }
     
-        if (B_can_OOO && document.getElementById(`X3`).className == `empty` && document.getElementById(`X2`).className == `empty` && document.getElementById(`X1`).className == `empty`) {
+        if (B_can_OOO && document.getElementById(`X3`).className == `empty` && document.getElementById(`X2`).className == `empty` && document.getElementById(`X1`).className == `empty` && !is_Bcheck(`B_K`, 4, 3)) {
             result_list.push(2)
         }
     }
@@ -2020,11 +2041,11 @@ function pseudoBK_moves_list(position, pseudo_list) { //Black King
 
     }
     if (position == 4) {
-        if (B_can_OO && pseudo_list[5] == `empty` && pseudo_list[6] == `empty`) {
+        if (B_can_OO && pseudo_list[5] == `empty` && pseudo_list[6] == `empty` && !is_Bcheck(`B_K`, 4, 5)) {
             result_list.push(6)
         }
     
-        if (B_can_OOO && pseudo_list[3] == `empty` && pseudo_list[2] == `empty` && pseudo_list[1] == `empty`) {
+        if (B_can_OOO && pseudo_list[3] == `empty` && pseudo_list[2] == `empty` && pseudo_list[1] == `empty` && !is_Bcheck(`B_K`, 4, 3)) {
             result_list.push(2)
         }
     }
@@ -2036,7 +2057,7 @@ function black_move(node) {
     if (!is_Wturn) {
         let playable_list = []; //list of id representing integer index
         let promotion = false;
-
+        
         if (node.className == `B_P`) {
             playable_list = BP_moves_list(Number(node.id.slice(1)));
         }
@@ -2061,12 +2082,13 @@ function black_move(node) {
             playable_list = BK_moves_list(Number(node.id.slice(1)));
         }
 
-
         for (let pos of playable_list) {
             if (!is_Bcheck(node.className, Number(node.id.slice(1)), pos)) {
                 document.getElementById(`X` + String(pos)).classList.add(`pos_playable`);
             }
         }
+
+        updatecursor()
 
         for (let temp of document.querySelectorAll(`td`)) {
             temp.onclick = function() {
@@ -2125,17 +2147,16 @@ function black_move(node) {
 
                     //castle status (king)
                     if (node.className ==  `B_K`) {
-                        B_can_OO = false;
-                        B_can_OOO = false;
-
-                        if (temp.id.slice(1) == `6`) {
+                        if (temp.id == `X6` && B_can_OO) {
                             document.getElementById(`X7`).className = `empty`;
                             document.getElementById(`X5`).className = `B_R`;
                         }
-                        else if (temp.id.slice(1) == `2`) {
+                        else if (temp.id == `X2` && B_can_OOO) {
                             document.getElementById(`X0`).className = `empty`;
                             document.getElementById(`X3`).className = `B_R`;
                         }
+                        B_can_OO = false;
+                        B_can_OOO = false;
                     }
 
                     //pawn promotion
@@ -2210,11 +2231,17 @@ function black_move(node) {
 
                     node.className = `empty`;
                     if(is_Wcheckmate()) {
-                        document.getElementById(`gamestatus`).textContent = `Black won by Checkmate!`;
+                        if (is_Wcheck()) {
+                            document.getElementById(`gamestatus`).textContent = `Black won by Checkmate!`;
+                        }
+                        else {
+                            document.getElementById(`gamestatus`).textContent = `Game is drawn due to\nStalemate!`;
+                        }
                     }
                     else if(!promotion) {
                         document.getElementById(`gamestatus`).textContent = `White's turn`;
                     }
+                    updatecursor()
                 }   
             }
         }
