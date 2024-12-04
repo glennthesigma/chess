@@ -1,15 +1,17 @@
 #main {
     display: flex;
+    flex-wrap: wrap;
+    margin-left: 5%;
+    justify-content: 40%;
 }
 
 #griddiv {
     float: left;
-    margin-left: 5%;
-    padding-right: 30px;
 }
 
 #chessboard {
     border-collapse: collapse;
+    height: 634px;
 }
 
 #X0, #X2, #X4, #X6,
@@ -35,14 +37,13 @@
 }
 
 #griddiv td {
-    width: 75px;
-    height: 75px;
+    width: 70px;
 }
 
 #griddiv #coordinate {
     border:white;
     text-align: center;
-    font-size: 30px;
+    font-size: 200%;
     font-family: "Protest Revolution", sans-serif;
 }
 
@@ -50,79 +51,91 @@
     background-image: url(imagefile/Chess_rdt60.png);
     background-repeat: no-repeat;
     background-position: center;
+    background-size: contain;
 }
 
 .B_N {
     background-image: url(imagefile/Chess_ndt60.png);
     background-repeat: no-repeat;
     background-position: center;
+    background-size: contain;
 }
 
 .B_B {
     background-image: url(imagefile/Chess_bdt60.png);
     background-repeat: no-repeat;
     background-position: center;
+    background-size: contain;
 }
 
 .B_Q {
     background-image: url(imagefile/Chess_qdt60.png);
     background-repeat: no-repeat;
     background-position: center;
+    background-size: contain;
 }
 
 .B_K {
     background-image: url(imagefile/Chess_kdt60.png);
     background-repeat: no-repeat;
     background-position: center;
+    background-size: contain;
 }
 
 .B_P {
     background-image: url(imagefile/Chess_pdt60.png);
     background-repeat: no-repeat;
     background-position: center;
+    background-size: contain;
 }
 
 .W_R {
     background-image: url(imagefile/Chess_rlt60.png);
     background-repeat: no-repeat;
     background-position: center;
+    background-size: contain;
 }
 
 .W_N {
     background-image: url(imagefile/Chess_nlt60.png);
     background-repeat: no-repeat;
     background-position: center;
+    background-size: contain;
 }
 
 .W_B {
     background-image: url(imagefile/Chess_blt60.png);
     background-repeat: no-repeat;
     background-position: center;
+    background-size: contain;
 }
 
 .W_Q {
     background-image: url(imagefile/Chess_qlt60.png);
     background-repeat: no-repeat;
     background-position: center;
+    background-size: contain;
 }
 
 .W_K {
     background-image: url(imagefile/Chess_klt60.png);
     background-repeat: no-repeat;
     background-position: center;
+    background-size: contain;
 }
 
 .W_P {
     background-image: url(imagefile/Chess_plt60.png);
     background-repeat: no-repeat;
     background-position: center;
+    background-size: contain;
 }
 
 .pos_playable {
     background-image: url(imagefile/grey_dot.png);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 50px;
+    background-size: 70%;
 }
 
 #statusdiv {
@@ -132,11 +145,12 @@
     background-size: cover;
     position: relative;
     width: auto;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 10px;
-    max-height: 613px;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-top: 2%;
+    height: 613px;
     outline: auto;
+    margin-left: 75px;
 }
 
 #statusdiv td {
