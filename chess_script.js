@@ -1000,11 +1000,11 @@ function WK_moves_list(position) { //White King
 
     }
     if (position == 60) {
-        if (W_can_OO && document.getElementById(`X61`).className == `empty` && document.getElementById(`X62`).className == `empty` && !is_Wcheck(`W_K`, 60, 61)) {
+        if (W_can_OO && document.getElementById(`X61`).className == `empty` && document.getElementById(`X62`).className == `empty` && can_WKgo(61)) {
             result_list.push(62)
         }
     
-        if (W_can_OOO && document.getElementById(`X59`).className == `empty` && document.getElementById(`X58`).className == `empty` && document.getElementById(`X57`).className == `empty` && !is_Wcheck(`W_K`, 60, 59)) {
+        if (W_can_OOO && document.getElementById(`X59`).className == `empty` && document.getElementById(`X58`).className == `empty` && document.getElementById(`X57`).className == `empty` && can_WKgo(59)) {
             result_list.push(58)
         }
     }
@@ -1037,11 +1037,11 @@ function pseudoWK_moves_list(position, pseudo_list) { //White King
 
     }
     if (position == 60) {
-        if (W_can_OO && pseudo_list[61] == `empty` && pseudo_list[62] == `empty` && !is_Wcheck(`W_K`, 60, 61)) {
+        if (W_can_OO && pseudo_list[61] == `empty` && pseudo_list[62] == `empty` && can_WKgo(61)) {
             result_list.push(62)
         }
     
-        if (W_can_OOO && pseudo_list[59] == `empty` && pseudo_list[58] == `empty` && pseudo_list[57] == `empty` && !is_Wcheck(`W_K`, 60, 59)) {
+        if (W_can_OOO && pseudo_list[59] == `empty` && pseudo_list[58] == `empty` && pseudo_list[57] == `empty` && can_WKgo(59)) {
             result_list.push(58)
         }
     }
@@ -1054,7 +1054,7 @@ function white_move(node) {
     if (is_Wturn) {
         let playable_list = []; //list of id representing integer index
         let promotion = false;
-
+        
         if (node.className == `W_P`) {
             playable_list = WP_moves_list(Number(node.id.slice(1)));
         }
@@ -1094,7 +1094,7 @@ function white_move(node) {
                         document.getElementById(`X` + String(pos)).classList.remove(`pos_playable`);
                     }
 
-                    white_move(temp);
+                    return white_move(temp);
                 }
                 else if (!temp.className.includes(`pos_playable`)) {
                     for (let pos of playable_list) {
@@ -1124,10 +1124,12 @@ function white_move(node) {
                         add_captured(`B_P`);
                     }
 
+                    //capture piece
                     if (temp.className == `B_R` || temp.className == `B_N` || temp.className == `B_B` || temp.className == `B_Q` || temp.className == `B_P`) {
                         add_captured(temp.className);
                     }
 
+                    //castle status (rook)
                     if (node.className ==  `W_R`) {
                         if (node.id == `X56`) {
                             W_can_OOO = false;
@@ -1137,6 +1139,7 @@ function white_move(node) {
                         }
                     }
 
+                    //castle status (king)
                     if (node.className ==  `W_K`) {
                         if (temp.id == `X62` && W_can_OO) {
                             document.getElementById(`X63`).className = `empty`;
@@ -1150,6 +1153,7 @@ function white_move(node) {
                         W_can_OOO = false;
                     }
 
+                    //pawn promotion
                     if (W_pot_pro.includes(Number(temp.id.slice(1)))) {
                         function removenodes() {
                             knight_button.className = ``
@@ -1168,10 +1172,10 @@ function white_move(node) {
                         const rook_button = document.getElementById(`Rpromote`)
                         const queen_button = document.getElementById(`Qpromote`)
 
-                        knight_button.className = `W_Ndisplay`;
-                        bishop_button.className = `W_Bdisplay`;
-                        rook_button.className = `W_Rdisplay`;
-                        queen_button.className = `W_Qdisplay`;
+                        knight_button.className = `B_Ndisplay`;
+                        bishop_button.className = `B_Bdisplay`;
+                        rook_button.className = `B_Rdisplay`;
+                        queen_button.className = `B_Qdisplay`;
                         
                         knight_button.onclick = function() {
                             if (is_Wturn) {
@@ -1833,7 +1837,7 @@ function pseudoBQ_moves_list(position, pseudo_list) { //Black Queen
 }
 
 //BLACK KNIGHT
-function BN_moves_list(position) { //Black kNight
+function BN_moves_list(position) { //Black kNig
     let result_list = [];
     const xpos = position % 8;
     const ypos = Math.floor(position / 8);
@@ -2004,11 +2008,11 @@ function BK_moves_list(position) { //Black King
 
     }
     if (position == 4) {
-        if (B_can_OO && document.getElementById(`X5`).className == `empty` && document.getElementById(`X6`).className == `empty` && !is_Bcheck(`B_K`, 4, 5)) {
+        if (B_can_OO && document.getElementById(`X5`).className == `empty` && document.getElementById(`X6`).className == `empty` && can_BKgo(5)) {
             result_list.push(6)
         }
     
-        if (B_can_OOO && document.getElementById(`X3`).className == `empty` && document.getElementById(`X2`).className == `empty` && document.getElementById(`X1`).className == `empty` && !is_Bcheck(`B_K`, 4, 3)) {
+        if (B_can_OOO && document.getElementById(`X3`).className == `empty` && document.getElementById(`X2`).className == `empty` && document.getElementById(`X1`).className == `empty` && can_BKgo(3)) {
             result_list.push(2)
         }
     }
@@ -2041,11 +2045,11 @@ function pseudoBK_moves_list(position, pseudo_list) { //Black King
 
     }
     if (position == 4) {
-        if (B_can_OO && pseudo_list[5] == `empty` && pseudo_list[6] == `empty` && !is_Bcheck(`B_K`, 4, 5)) {
+        if (B_can_OO && pseudo_list[5] == `empty` && pseudo_list[6] == `empty` && can_BKgo(5)) {
             result_list.push(6)
         }
     
-        if (B_can_OOO && pseudo_list[3] == `empty` && pseudo_list[2] == `empty` && pseudo_list[1] == `empty` && !is_Bcheck(`B_K`, 4, 3)) {
+        if (B_can_OOO && pseudo_list[3] == `empty` && pseudo_list[2] == `empty` && pseudo_list[1] == `empty` && can_BKgo(3)) {
             result_list.push(2)
         }
     }
@@ -2130,9 +2134,6 @@ function black_move(node) {
                     //capture piece
                     if (temp.className == `W_R` || temp.className == `W_N` || temp.className == `W_B` || temp.className == `W_Q` || temp.className == `W_P`) {
                         add_captured(temp.className);
-                    }
-                    else if (true) {
-                        //need add en passant capture
                     }
 
                     //castle status (rook)
@@ -2513,6 +2514,50 @@ function is_Bcheckmate() {
             if (!mass_isBcheck(`B_K`, index, BK_moves_list(index))) {
                 return false
             }
+        }
+    }
+    return true;
+}
+
+//castle
+function can_WKgo(move) {
+    for (let index = 0; index < 64; index++) {
+        let piece = document.getElementById(`X` + String(index)).className;
+        if (piece == `B_P` && (BP_moves_list(index).includes(move) || BP_moves_list(index).includes(60))) {
+            return false;
+        }
+        if (piece == `B_R` && (BR_moves_list(index).includes(move) || BR_moves_list(index).includes(60))) {
+            return false;
+        }
+        if (piece == `B_B` && (BB_moves_list(index).includes(move) || BB_moves_list(index).includes(60))) {
+            return false;
+        }
+        if (piece == `B_Q` && (BQ_moves_list(index).includes(move) || BQ_moves_list(index).includes(60))) {
+            return false;
+        }
+        if (piece == `B_N` && (BN_moves_list(index).includes(move) || BN_moves_list(index).includes(60))) {
+            return false;
+        }
+    }
+    return true;
+}
+function can_BKgo(move) {
+    for (let index = 0; index < 64; index++) {
+        let piece = document.getElementById(`X` + String(index)).className;
+        if (piece == `W_P` && (WP_moves_list(index).includes(move) || WP_moves_list(index).includes(4))) {
+            return false;
+        }
+        if (piece == `W_R` && (WR_moves_list(index).includes(move) || WR_moves_list(index).includes(4))) {
+            return false;
+        }
+        if (piece == `W_B` && (WB_moves_list(index).includes(move) || WB_moves_list(index).includes(4))) {
+            return false;
+        }
+        if (piece == `W_Q` && (WQ_moves_list(index).includes(move) || WQ_moves_list(index).includes(4))) {
+            return false;
+        }
+        if (piece == `W_N` && (WN_moves_list(index).includes(move) || WN_moves_list(index).includes(4))) {
+            return false;
         }
     }
     return true;
