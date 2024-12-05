@@ -1,8 +1,8 @@
 #main {
     display: flex;
-    flex-wrap: wrap;
     margin-left: 5%;
     justify-content: 40%;
+    flex-wrap: wrap;
 }
 
 #griddiv {
@@ -144,13 +144,26 @@
     background-position: center;
     background-size: cover;
     position: relative;
-    width: auto;
+    width: 284px;
     padding-left: 1%;
     padding-right: 1%;
     padding-top: 2%;
     height: 613px;
     outline: auto;
-    margin-left: 75px;
+    margin-left: 70px;
+}
+
+@media(max-width: 1094px) {
+    #griddiv {
+        width: 70%;
+        max-width: 500%;
+        aspect-ratio: 1 / 1;
+    }
+    #chessboard {
+        width: 100%;
+        height: 100%;
+        border-collapse: collapse;
+    }
 }
 
 #statusdiv td {
@@ -164,8 +177,8 @@
     font-size: 24px;
     font-family: "Protest Revolution", sans-serif;
     white-space: pre-line;
-    margin-top: 50%;
     text-align: center;
+    align-self: center;
 }
 
 #whitepawn {
@@ -261,5 +274,7 @@
     font-family: "Protest Revolution", sans-serif;
     color: white;
     position: absolute;
+    left: 50%; /* Move the child to the middle */
+    transform: translateX(-50%); /* Center it by shifting half its width */
     bottom: 110px;
 }
