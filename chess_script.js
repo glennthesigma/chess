@@ -554,7 +554,7 @@ function WB_moves_list(position) { //White Bishop
     end = false;
 
     if (position % 9 == 0) {
-        for (pos = 9; pos <= 63; pos += 9) {
+        for (pos = 0; pos <= 63; pos += 9) {
             if (pos != position) {
                 let negative = document.getElementById(`X` + String(pos)).className;
             
@@ -733,7 +733,7 @@ function pseudoWB_moves_list(position, pseudo_list) { //White Bishop
     end = false;
 
     if (position % 9 == 0) {
-        for (pos = 9; pos <= 63; pos += 9) {
+        for (pos = 0; pos <= 63; pos += 9) {
             if (pos != position) {
                 let negative = pseudo_list[pos];
             
@@ -1562,7 +1562,7 @@ function BB_moves_list(position) { //Black Bishop
     end = false;
 
     if (position % 9 == 0) {
-        for (pos = 9; pos <= 63; pos += 9) {
+        for (pos = 0; pos <= 63; pos += 9) {
             if (pos != position) {
                 let negative = document.getElementById(`X` + String(pos)).className;
             
@@ -1741,7 +1741,7 @@ function pseudoBB_moves_list(position, pseudo_list) { //Black Bishop
     end = false;
 
     if (position % 9 == 0) {
-        for (pos = 9; pos <= 63; pos += 9) {
+        for (pos = 0; pos <= 63; pos += 9) {
             if (pos != position) {
                 let negative = pseudo_list[pos];
             
