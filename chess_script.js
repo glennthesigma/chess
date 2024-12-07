@@ -8,6 +8,21 @@ var W_pot_pro = []; //white has potential promotion(s)
 var B_pot_pro = []; //black has potential promotion(s)
 var W_pot_ep = -1; //white has potential en passant(s)
 var B_pot_ep = -1; //white has potential en passant(s)
+var moves_nocapture = -100; //if count is 0, boolean is false
+var moves_repetition = -2.5; //threefold repetition
+var move_number = 0.5; //every move, increment by 0.5
+var last_1_board = ['B_R', 'B_N', 'B_B', 'B_Q', 'B_K', 'B_B', 'B_N', 'B_R', 
+                    'B_P', 'B_P', 'B_P', 'B_P', 'B_P', 'B_P', 'B_P', 'B_P', 
+                    'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 
+                    'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 
+                    'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 
+                    'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', `empty`,
+                    'W_P', 'W_P', 'W_P', 'W_P', 'W_P', 'W_P', 'W_P', 'W_P', 
+                    'W_R', 'W_N', 'W_B', 'W_Q', 'W_K', 'W_B', 'W_N', 'W_R']; //shows last board (intialised as starting board)
+var last_2_board = []; //shows last 2nd board
+var last_3_board = []; //shows last 3rd board
+var last_4_board = []; //shows last 4th board (where the comparison is made)
+var game_ended = false;
 
 //preparing the board
 document.getElementById(`gamestatus`).textContent = `White's turn`;
@@ -79,12 +94,12 @@ for (let node of document.querySelectorAll(`td`)) {
     }
 }
 
-updatecursor()
+updatecursor(`W`)
 
 //RESET BOARD
 const resetbutton = document.getElementById(`reset`);
 
-resetbutton.onmouseenter = resetbutton.style.cursor = "pointer";
+resetbutton.style.cursor = "pointer";
 
 resetbutton.onclick = function() {
     is_Wturn = true; 
@@ -96,7 +111,22 @@ resetbutton.onclick = function() {
     W_pot_pro = []; 
     B_pot_pro = []; 
     W_pot_ep = -1; 
-    B_pot_ep = -1; 
+    B_pot_ep = -1;
+    moves_nocapture = -100;
+    moves_repetition = -2.5;
+    move_number = 0.5;
+    last_1_board = ['B_R', 'B_N', 'B_B', 'B_Q', 'B_K', 'B_B', 'B_N', 'B_R', 
+                    'B_P', 'B_P', 'B_P', 'B_P', 'B_P', 'B_P', 'B_P', 'B_P', 
+                    'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 
+                    'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 
+                    'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 
+                    'empty', 'empty', 'empty', 'empty', 'empty', 'empty', 'empty', `empty`,
+                    'W_P', 'W_P', 'W_P', 'W_P', 'W_P', 'W_P', 'W_P', 'W_P', 
+                    'W_R', 'W_N', 'W_B', 'W_Q', 'W_K', 'W_B', 'W_N', 'W_R'];
+    last_2_board = [];
+    last_3_board = [];
+    last_4_board = [];
+    game_ended = false;
 
     document.getElementById(`gamestatus`).textContent = `White's turn`;
     updatedeltamaterial();
@@ -163,12 +193,13 @@ resetbutton.onclick = function() {
             node.className = `empty`;
         }
     }
+    updatecursor(`W`)
 }
 
 //UPDATE CURSOR
-function updatecursor() {
+function updatecursor(side) { //side is `W` or `B`
     for (let pos = 0; pos < 64; pos++) {
-        if (document.getElementById(`X` + String(pos)).className != `empty` || document.getElementById(`X` + String(pos)).classList.contains(`pos_playable`)) {
+        if (document.getElementById(`X` + String(pos)).className[0] == side || document.getElementById(`X` + String(pos)).classList.contains(`pos_playable`)) {
             document.getElementById(`X` + String(pos)).style.cursor = "pointer";
         }
         else {
@@ -210,7 +241,7 @@ function piece_to_value(piece) {
         return 5
     }
     if (piece[2] == `Q`) {
-        return 8
+        return 9
     }
 }
 
@@ -1051,7 +1082,7 @@ function pseudoWK_moves_list(position, pseudo_list) { //White King
 
 //
 function white_move(node) {
-    if (is_Wturn) {
+    if (is_Wturn && !game_ended) {
         let playable_list = []; //list of id representing integer index
         let promotion = false;
         
@@ -1085,7 +1116,7 @@ function white_move(node) {
             }
         }
 
-        updatecursor()
+        updatecursor(`W`)
 
         for (let temp of document.querySelectorAll(`td`)) {
             temp.onclick = function() {
@@ -1106,6 +1137,9 @@ function white_move(node) {
                     }
                 }
                 else {
+                    move_number += 0.5;
+                    moves_nocapture++;
+
                     for (let pos of playable_list) {
                         document.getElementById(`X` + String(pos)).classList.remove(`pos_playable`);
                     }
@@ -1127,6 +1161,11 @@ function white_move(node) {
                     //capture piece
                     if (temp.className == `B_R` || temp.className == `B_N` || temp.className == `B_B` || temp.className == `B_Q` || temp.className == `B_P`) {
                         add_captured(temp.className);
+                        moves_nocapture = -100;
+                    }
+
+                    if (node.className == `W_P`) {
+                        moves_nocapture = -100;
                     }
 
                     //castle status (rook)
@@ -1226,16 +1265,30 @@ function white_move(node) {
                     node.className = `empty`;
                     if (is_Bcheckmate()) {
                         if (is_Bcheck()) {
+                            game_ended = true;
                             document.getElementById(`gamestatus`).textContent = `White won by Checkmate!`;
                         }
                         else {
+                            game_ended = true;
                             document.getElementById(`gamestatus`).textContent = `Game is drawn due to\nStalemate!`;
                         }
+                    }
+                    else if (is_TFR()) {
+                        game_ended = true;
+                        document.getElementById(`gamestatus`).textContent = `Game drawn due to\nThreefold Repetition`
+                    }
+                    else if (is_IMC()) {
+                        game_ended = true;
+                        document.getElementById(`gamestatus`).textContent = `Game drawn due to\nInsufficient Material`
+                    }
+                    else if (!!!moves_nocapture) {
+                        game_ended = true;
+                        document.getElementById(`gamestatus`).textContent = `Game drawn due to\n50-Move Rule`
                     }
                     else if(!promotion) {
                         document.getElementById(`gamestatus`).textContent = `Black's turn`;
                     }
-                    updatecursor()
+                    updatecursor(`B`)
                 }   
             }
         }
@@ -2058,7 +2111,7 @@ function pseudoBK_moves_list(position, pseudo_list) { //Black King
 
 //
 function black_move(node) {
-    if (!is_Wturn) {
+    if (!is_Wturn && !game_ended) {
         let playable_list = []; //list of id representing integer index
         let promotion = false;
         
@@ -2092,7 +2145,7 @@ function black_move(node) {
             }
         }
 
-        updatecursor()
+        updatecursor(`B`)
 
         for (let temp of document.querySelectorAll(`td`)) {
             temp.onclick = function() {
@@ -2113,6 +2166,9 @@ function black_move(node) {
                     }
                 }
                 else {
+                    move_number += 0.5;
+                    moves_nocapture++;
+
                     for (let pos of playable_list) {
                         document.getElementById(`X` + String(pos)).classList.remove(`pos_playable`);
                     }
@@ -2134,6 +2190,11 @@ function black_move(node) {
                     //capture piece
                     if (temp.className == `W_R` || temp.className == `W_N` || temp.className == `W_B` || temp.className == `W_Q` || temp.className == `W_P`) {
                         add_captured(temp.className);
+                        moves_nocapture = -100;
+                    }
+
+                    if (node.className == `B_P`) {
+                        moves_nocapture = -100;
                     }
 
                     //castle status (rook)
@@ -2233,16 +2294,30 @@ function black_move(node) {
                     node.className = `empty`;
                     if(is_Wcheckmate()) {
                         if (is_Wcheck()) {
+                            game_ended = true;
                             document.getElementById(`gamestatus`).textContent = `Black won by Checkmate!`;
                         }
                         else {
+                            game_ended = true;
                             document.getElementById(`gamestatus`).textContent = `Game is drawn due to\nStalemate!`;
                         }
+                    }
+                    else if (is_TFR()) {
+                        game_ended = true;
+                        document.getElementById(`gamestatus`).textContent = `Game drawn due to\nThreefold Repetition`
+                    }
+                    else if (is_IMC()) {
+                        game_ended = true;
+                        document.getElementById(`gamestatus`).textContent = `Game drawn due to\nInsufficient Material`
+                    }
+                    else if (!!!moves_nocapture) {
+                        game_ended = true;
+                        document.getElementById(`gamestatus`).textContent = `Game drawn due to\n50-Move Rule`
                     }
                     else if(!promotion) {
                         document.getElementById(`gamestatus`).textContent = `White's turn`;
                     }
-                    updatecursor()
+                    updatecursor(`W`)
                 }   
             }
         }
@@ -2561,4 +2636,146 @@ function can_BKgo(move) {
         }
     }
     return true;
+}
+
+//insufficient material check
+function is_IMC() {
+    let WN_list = [];
+    let WB_list = [];
+    let BN_list = [];
+    let BB_list = [];
+
+    for (let index = 0 ; index < 64; index++) {
+        let piece = document.getElementById(`X` + String(index)).className;
+        if (piece.slice(2) == `P` || piece.slice(2) == `R` || piece.slice(2) == `Q`) {
+            return false;
+        }
+        else if (piece == `W_N`) {
+            WN_list.push(index)
+            if (WN_list.length == 2) {
+                return false;
+            }
+        }
+        else if (piece == `W_B`) {
+            WB_list.push(index)
+            if (WB_list.length == 2) {
+                return false;
+            }
+        }
+        else if (piece == `B_N`) {
+            BN_list.push(index)
+            if (BN_list.length == 2) {
+                return false;
+            }
+        }
+        else if (piece == `B_B`) {
+            BB_list.push(index)
+            if (BB_list.length == 2) {
+                return false;
+            }
+        }
+    }
+
+    if (WN_list.length == 0 && WB_list.length == 0 && BN_list.length == 0 && BB_list.length == 0) { //K vs K
+        return true;
+    }
+    if (WN_list.length == 1 && WB_list.length == 0 && BN_list.length == 0 && BB_list.length == 0) { //N + K vs K
+        return true;
+    }
+    if (WN_list.length == 0 && WB_list.length == 1 && BN_list.length == 0 && BB_list.length == 0) { //K vs N + K
+        return true;
+    }
+    if (WN_list.length == 0 && WB_list.length == 0 && BN_list.length == 1 && BB_list.length == 0) { //B + K vs K
+        return true;
+    }
+    if (WN_list.length == 0 && WB_list.length == 0 && BN_list.length == 0 && BB_list.length == 1) { //K vs B + K
+        return true;
+    }
+    if (WN_list.length == 0 && WB_list.length == 1 && BN_list.length == 0 && BB_list.length == 1) { //B + K vs B + K
+        const light_squares = [0, 2, 4, 6,
+                                9, 11, 13, 15,
+                                16, 18, 20, 22, 
+                                25, 27, 29, 31,
+                                32, 34, 36, 38,
+                                41, 43, 45, 47,
+                                48, 50, 52, 54,
+                                57, 59, 61, 63]
+
+        if (light_squares.includes(WB_list[0]) && light_squares.includes(BB_list[0])) { //light square bishops
+            return true;
+        }
+        if (!light_squares.includes(WB_list[0]) && !light_squares.includes(BB_list[0])) { //light square bishops
+            return true;
+        }
+    }
+    return false;
+}
+
+var move_number = 0.5; //every move, increment by 0.5
+var last_1_board; //shows last board
+var last_2_board; //shows last 2nd board
+
+//threefold repetition check
+function is_TFR() {
+    let pseudo_list = []; //represents current position
+
+    for (let index = 0; index < 64; index++) {
+        if (document.getElementById(`X` + String(index)).classList.contains(`W_P`)) {
+            pseudo_list.push(`W_P`);
+        }
+        else if (document.getElementById(`X` + String(index)).classList.contains(`W_R`)) {
+            pseudo_list.push(`W_R`);
+        }
+        else if (document.getElementById(`X` + String(index)).classList.contains(`W_B`)) {
+            pseudo_list.push(`W_B`);
+        }
+        else if (document.getElementById(`X` + String(index)).classList.contains(`W_Q`)) {
+            pseudo_list.push(`W_Q`);
+        }
+        else if (document.getElementById(`X` + String(index)).classList.contains(`W_N`)) {
+            pseudo_list.push(`W_N`);
+        }
+        else if (document.getElementById(`X` + String(index)).classList.contains(`W_K`)) {
+            pseudo_list.push(`W_K`);
+        }
+        else if (document.getElementById(`X` + String(index)).classList.contains(`B_P`)) {
+            pseudo_list.push(`B_P`);
+        }
+        else if (document.getElementById(`X` + String(index)).classList.contains(`B_R`)) {
+            pseudo_list.push(`B_R`);
+        }
+        else if (document.getElementById(`X` + String(index)).classList.contains(`B_B`)) {
+            pseudo_list.push(`B_B`);
+        }
+        else if (document.getElementById(`X` + String(index)).classList.contains(`B_Q`)) {
+            pseudo_list.push(`B_Q`);
+        }
+        else if (document.getElementById(`X` + String(index)).classList.contains(`B_N`)) {
+            pseudo_list.push(`B_N`);
+        }
+        else if (document.getElementById(`X` + String(index)).classList.contains(`B_K`)) {
+            pseudo_list.push(`B_K`);
+        }
+        else {
+            pseudo_list.push(`empty`);
+        }
+    }
+    
+    if (String(pseudo_list) == String(last_4_board)) {
+        moves_repetition += 0.5;
+    }
+    else {
+        moves_repetition = -2.5;
+    }
+
+    if (!!!moves_repetition) {
+        return true;
+    }
+
+    last_4_board = last_3_board;
+    last_3_board = last_2_board;
+    last_2_board = last_1_board;
+    last_1_board = pseudo_list;
+
+    return false;
 }
