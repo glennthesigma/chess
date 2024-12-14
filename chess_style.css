@@ -164,7 +164,6 @@
     }
     #statusdiv {
         width: 86%;
-        height: 30vh;
         margin-left: 50%;
         transform: translate(-50%);
     }
