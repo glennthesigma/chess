@@ -164,6 +164,7 @@
     }
     #statusdiv {
         width: 86%;
+        height: 40vh;
         margin-left: 50%;
         transform: translate(-50%);
     }
@@ -176,6 +177,16 @@
         transform: translateX(-50%);
         width: 80%;
     }
+    #gamestatus {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    #reset {
+        position: absolute;
+        top: 110%;
+    }
 }
 
 #statusdiv td {
@@ -184,11 +195,12 @@
 }
 
 #gamestatus {
-    max-width: auto;
+    width: 80%;
     font-weight: bold;
-    font-size: 24px;
+    font-size: 1.5em;
     font-family: "Protest Revolution", sans-serif;
     white-space: pre-line;
+    justify-self: center;
     text-align: center;
     align-self: center;
 }
@@ -274,8 +286,8 @@
 }
 
 #promotechoice td{
-    width: 61.6px;
-    height: 61.6px;
+    width: 10vw;
+    height: 10vw;
 }
 
 #reset {
