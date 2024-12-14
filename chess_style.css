@@ -1,8 +1,7 @@
 #main {
     display: flex;
-    margin-left: 5%;
-    justify-content: 40%;
-    flex-wrap: wrap;
+    justify-content: center;
+    margin-right: 5%;
 }
 
 #griddiv {
@@ -11,7 +10,7 @@
 
 #chessboard {
     border-collapse: collapse;
-    height: 634px;
+    height: calc(45vw + 16px);
 }
 
 #X0, #X2, #X4, #X6,
@@ -37,7 +36,7 @@
 }
 
 #griddiv td {
-    width: 70px;
+    width: 5vw;
 }
 
 #griddiv #coordinate {
@@ -148,21 +147,35 @@
     padding-left: 1%;
     padding-right: 1%;
     padding-top: 2%;
-    height: 613px;
+    height: 543px;
     outline: auto;
     margin-left: 70px;
 }
 
-@media(max-width: 1094px) {
-    #griddiv {
-        width: 70%;
-        max-width: 500%;
-        aspect-ratio: 1 / 1;
+@media (max-width: 850px) {
+    #main {
+        flex-direction: column;
+    }
+    #griddiv td {
+        width: 10vw;
     }
     #chessboard {
-        width: 100%;
-        height: 100%;
-        border-collapse: collapse;
+        height: calc(90vw + 16px);
+    }
+    #statusdiv {
+        width: 86%;
+        height: 30vh;
+        margin-left: 50%;
+        transform: translate(-50%);
+    }
+    #whitepiece, #promotechoice {
+        justify-self: center;
+        width: 80%;
+    }
+    #blackpiece {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
     }
 }
 
