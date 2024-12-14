@@ -1211,10 +1211,10 @@ function white_move(node) {
                         const rook_button = document.getElementById(`Rpromote`)
                         const queen_button = document.getElementById(`Qpromote`)
 
-                        knight_button.className = `B_Ndisplay`;
-                        bishop_button.className = `B_Bdisplay`;
-                        rook_button.className = `B_Rdisplay`;
-                        queen_button.className = `B_Qdisplay`;
+                        knight_button.className = `W_Ndisplay`;
+                        bishop_button.className = `W_Bdisplay`;
+                        rook_button.className = `W_Rdisplay`;
+                        queen_button.className = `W_Qdisplay`;
                         
                         knight_button.onclick = function() {
                             if (is_Wturn) {
